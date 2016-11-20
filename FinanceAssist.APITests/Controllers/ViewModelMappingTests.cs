@@ -87,6 +87,30 @@ namespace FinanceAssist.APITests.Controllers
             }
         }
 
+        [TestMethod]
+        public void automapper_validDomainWithReverseMap_Suceed()
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<Domain.Expense, API.ViewModels.Expense>()
+             .ForMember(dest => dest.ExpneseDate, opt => opt.MapFrom(src => src.ExpneseDate.ToString("yyyy/M/d")))
+             .ReverseMap()
+            );
+            API.ViewModels.Expense[] source = setupThreeExpenseVMList();
+            Domain.Expense[] expected = setupThreeExpenseDomainList();
+
+            //act
+            //map in the other direction 
+            var actualResults = Mapper.Map<API.ViewModels.Expense[], Domain.Expense[]>(source);
+
+            //assert
+            Assert.AreEqual(expected.Length, actualResults.Length);
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.AreEqual(expected[i].Category, actualResults[i].Category);
+                Assert.AreEqual(expected[i].ExpneseDate, actualResults[i].ExpneseDate);
+                Assert.AreEqual(expected[i].Merchant, actualResults[i].Merchant);
+            }
+        }
+
         //[TestMethod]
         //[ExpectedException(typeof(AutoMapperMappingException))]
         //public void automapper_dateFormatProjection_sucessfull()

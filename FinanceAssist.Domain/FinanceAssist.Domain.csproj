@@ -43,6 +43,7 @@
     <Compile Include="Expenses\DisplayExpensesTransaction.cs" />
     <Compile Include="Expenses\Expense.cs" />
     <Compile Include="Exceptions\RepositoryException.cs" />
+    <Compile Include="Interfaces\IApplicationLogger.cs" />
     <Compile Include="Interfaces\IExpenseRepository.cs" />
     <Compile Include="ITransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
